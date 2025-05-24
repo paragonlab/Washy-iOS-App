@@ -12,8 +12,8 @@ let package = Package(
             targets: ["Washy"]),
     ],
     dependencies: [
-        // Firebase
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.0.0"),
+        // Supabase
+        .package(url: "https://github.com/supabase-community/supabase-swift.git", from: "0.3.0"),
         
         // MapKit
         .package(url: "https://github.com/mapbox/mapbox-maps-ios.git", from: "10.0.0"),
@@ -31,9 +31,7 @@ let package = Package(
         .target(
             name: "Washy",
             dependencies: [
-                .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseStorage", package: "firebase-ios-sdk"),
+                .product(name: "Supabase", package: "supabase-swift"),
                 .product(name: "MapboxMaps", package: "mapbox-maps-ios"),
                 .product(name: "QRCode", package: "QRCode"),
                 .product(name: "Alamofire", package: "Alamofire"),
