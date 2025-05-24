@@ -1,18 +1,27 @@
 # Washy iOS App
 
-Aplicación iOS para la gestión de servicios de lavandería.
+Aplicación iOS de suscripción para lavado de autos que conecta usuarios con autolavados afiliados.
 
 ## Descripción
 
-Washy es una aplicación móvil desarrollada en iOS que permite a los usuarios gestionar servicios de lavandería de manera eficiente y conveniente.
+Washy es una aplicación móvil desarrollada en iOS que permite a los usuarios acceder a servicios de lavado de autos mediante un sistema de suscripción mensual. Los usuarios pueden redimir lavados escaneando un código QR generado en la app en cualquiera de los autolavados afiliados.
 
-## Características
+## Características Principales
 
-- Gestión de pedidos de lavandería
-- Seguimiento de estado de pedidos
-- Sistema de pagos integrado
-- Notificaciones en tiempo real
-- Historial de pedidos
+### Para Usuarios
+- Suscripciones mensuales con diferentes planes de lavado
+- QR dinámico para redimir lavados en autolavados participantes
+- Mapa en tiempo real con autolavados cercanos
+- Vista de perfil con historial, plan activo y lavados restantes
+- Sección de ofertas con servicios (talleres, etc.)
+- Tienda con promociones y productos de empresas afiliadas
+- Notificaciones inteligentes de promociones, recordatorios y estado del servicio
+
+### Para Autolavados
+- Módulo especial para autolavados afiliados
+- Escáner de QR integrado para validar lavados
+- Panel de control para gestión de servicios
+- Sin comisión por uso
 
 ## Requisitos
 
