@@ -205,7 +205,8 @@ struct EditProfileView: View {
             profile.phone = phone
             profile.updatedAt = Date()
             
-            await authViewModel.updateUserProfile(profile)
+            try await SupabaseService.shared.updateUserProfile(profile)
+            authViewModel.userProfile = profile
             dismiss()
         } catch {
             self.error = error.localizedDescription

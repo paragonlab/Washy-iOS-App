@@ -13,10 +13,15 @@ struct HomeView: View {
                     } else {
                         Text("No tienes un plan activo")
                             .foregroundColor(.gray)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(12)
+                            .shadow(radius: 2)
                     }
                     
                     // Lavados restantes
-                    RemainingWashesView(count: viewModel.remainingWashes)
+                    RemainingWashesView(remainingWashes: viewModel.remainingWashes)
                     
                     // Ofertas destacadas
                     FeaturedOffersView(offers: viewModel.featuredOffers)

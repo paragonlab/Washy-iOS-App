@@ -23,14 +23,16 @@ class MapViewModel: ObservableObject {
                 name: "AutoLavado Express",
                 address: "Av. Reforma 123",
                 latitude: 19.4326,
-                longitude: -99.1332
+                longitude: -99.1332,
+                rating: 4.5
             ),
             CarWash(
                 id: "2",
                 name: "Lavado Premium",
                 address: "Av. Insurgentes 456",
                 latitude: 19.4226,
-                longitude: -99.1432
+                longitude: -99.1432,
+                rating: 4.8
             )
         ]
     }

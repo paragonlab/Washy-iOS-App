@@ -18,20 +18,20 @@ class SupabaseService {
 
     // MARK: - Authentication
 
-    func signUp(email: String, password: String) async throws -> User? {
+    func signUp(email: String, password: String) async throws -> User {
         let response = try await client.auth.signUp(email: email, password: password)
         if let supabaseUser = response.user {
             return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
         }
-        return nil
+        throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create user"])
     }
 
-    func signIn(email: String, password: String) async throws -> User? {
+    func signIn(email: String, password: String) async throws -> User {
         let response = try await client.auth.signIn(email: email, password: password)
         if let supabaseUser = response.user {
             return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
         }
-        return nil
+        throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to sign in"])
     }
 
     func signOut() async throws {
@@ -41,11 +41,11 @@ class SupabaseService {
     // MARK: - Users
 
     func getCurrentUser() async throws -> User? {
-        if let session = try? await client.auth.session,
-           let user = session.user {
-            return User(id: user.id.uuidString, email: user.email, phone: user.phone)
+        let session = try? await client.auth.session
+        guard let user = session?.user else {
+            return nil
         }
-        return nil
+        return User(id: user.id.uuidString, email: user.email, phone: user.phone)
     }
 
     func getUserProfile(userId: String) async throws -> UserProfile {
@@ -94,7 +94,7 @@ class SupabaseService {
         let publicURL = try await client
             .storage
             .from("avatars")
-            .getPublicUrl(path: fileName)
+            .createSignedURL(path: fileName, expiresIn: 3600)
 
         return publicURL.absoluteString
     }
