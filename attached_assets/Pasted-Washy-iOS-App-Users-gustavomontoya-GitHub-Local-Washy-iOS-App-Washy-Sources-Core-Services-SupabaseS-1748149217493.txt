@@ -1,0 +1,48 @@
+Washy-iOS-App
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:28:12 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:36:12 Initializer for conditional binding must have Optional type, not 'User'
+
+Washy
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:28:12 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:36:12 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:53:81 Cannot convert value of type '(ID) -> some View' to expected argument type 'String'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:53:81 Referencing instance method 'id' on 'Optional' requires that 'User' conform to 'View'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:53:81 Generic parameter 'ID' could not be inferred
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:54:97 Cannot convert value of type '(ID) -> some View' to expected argument type 'String'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:54:97 Referencing instance method 'id' on 'Optional' requires that 'User' conform to 'View'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:54:97 Generic parameter 'ID' could not be inferred
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:71:26 Cannot convert value of type '(ID) -> some View' to expected argument type 'String'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:71:26 Referencing instance method 'id' on 'Optional' requires that 'User' conform to 'View'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:71:26 Generic parameter 'ID' could not be inferred
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:11:21 Cannot find 'PlanCardView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:14:21 Cannot find 'RemainingWashesView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:17:21 Cannot find 'FeaturedOffersView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:20:21 Cannot find 'StorePreviewView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:21:20 Incorrect argument labels in call (have 'id:name:address:coordinate:rating:', expected 'id:name:address:latitude:longitude:')
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:25:29 Cannot convert value of type 'CLLocationCoordinate2D' to expected argument type 'Double'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:28:20 Incorrect argument labels in call (have 'id:name:address:coordinate:rating:', expected 'id:name:address:latitude:longitude:')
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:32:29 Cannot convert value of type 'CLLocationCoordinate2D' to expected argument type 'Double'
