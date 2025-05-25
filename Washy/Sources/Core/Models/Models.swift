@@ -70,27 +70,40 @@ struct Subscription: Codable {
 }
 
 struct CarWash: Codable, Identifiable {
-    // Ajustar estas propiedades según el esquema real de la base de datos de 'car_washes'
-    let id: String // Asumiendo que hay un ID en la BD
+    let id: String
     let name: String
     let address: String
     let latitude: Double
     let longitude: Double
-    // ... otras propiedades relevantes del autolavado
+    let rating: Double
 }
 
 struct WashHistory: Codable, Identifiable {
-    // Ajustar estas propiedades según el esquema real de la base de datos de 'wash_history'
-    let id: String // Asumiendo que hay un ID en la BD
+    let id: String
     let userId: String
     let carWashId: String
-    let createdAt: Date // Asumiendo que el historial tiene createdAt
-    // ... otras propiedades relevantes del historial de lavado
+    let createdAt: Date
 
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
         case carWashId = "car_wash_id"
         case createdAt = "created_at"
+    }
+}
+
+struct Plan: Codable, Identifiable {
+    let id: String
+    let name: String
+    let price: Double
+    let washesIncluded: Int
+    let description: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case price
+        case washesIncluded = "washes_included"
+        case description
     }
 }
