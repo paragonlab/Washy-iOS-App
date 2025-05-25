@@ -4,7 +4,6 @@ import Supabase
 
 class SupabaseService {
     static let shared = SupabaseService()
-
     private let client: SupabaseClient
 
     private init() {
@@ -17,35 +16,30 @@ class SupabaseService {
         )
     }
 
-    // MARK: - Autenticación
+    // MARK: - Authentication
 
     func signUp(email: String, password: String) async throws -> User? {
         let response = try await client.auth.signUp(email: email, password: password)
-        if let supabaseUser = response.user {
-            return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
-        }
-        return nil
+        guard let supabaseUser = response.user else { return nil }
+        return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
     }
 
     func signIn(email: String, password: String) async throws -> User? {
         let response = try await client.auth.signIn(email: email, password: password)
-        if let supabaseUser = response.user {
-            return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
-        }
-        return nil
+        guard let supabaseUser = response.user else { return nil }
+        return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
     }
 
     func signOut() async throws {
         try await client.auth.signOut()
     }
 
-    // MARK: - Usuarios
+    // MARK: - Users
 
     func getCurrentUser() async throws -> User? {
-        if let session = try? await client.auth.session {
-            return User(id: session.user.id.uuidString, email: session.user.email, phone: session.user.phone)
-        }
-        return nil
+        guard let session = try? await client.auth.session,
+              let user = session.user else { return nil }
+        return User(id: user.id.uuidString, email: user.email, phone: user.phone)
     }
 
     func getUserProfile(userId: String) async throws -> UserProfile {
@@ -77,15 +71,19 @@ class SupabaseService {
             .execute()
     }
 
-    // MARK: - Almacenamiento
+    // MARK: - Storage
 
     func uploadProfileImage(userId: String, imageData: Data) async throws -> String {
         let fileName = "\(userId)/profile.jpg"
+        let fileOptions = FileOptions(
+            cacheControl: "3600",
+            contentType: "image/jpeg"
+        )
 
         try await client
             .storage
             .from("avatars")
-            .upload(path: fileName, file: imageData, options: nil)
+            .upload(path: fileName, file: imageData, options: fileOptions)
 
         let publicURL = try await client
             .storage
@@ -97,14 +95,13 @@ class SupabaseService {
 
     func deleteProfileImage(userId: String) async throws {
         let fileName = "\(userId)/profile.jpg"
-
         try await client
             .storage
             .from("avatars")
             .remove([fileName])
     }
 
-    // MARK: - Autolavados
+    // MARK: - Car Washes
 
     func getNearbyCarWashes(latitude: Double, longitude: Double, radius: Double) async throws -> [CarWash] {
         let response: [CarWash] = try await client
@@ -116,7 +113,7 @@ class SupabaseService {
         return response
     }
 
-    // MARK: - Suscripciones
+    // MARK: - Subscriptions
 
     func getCurrentSubscription(userId: String) async throws -> Subscription? {
         let response: [Subscription] = try await client
@@ -129,7 +126,7 @@ class SupabaseService {
         return response.first
     }
 
-    // MARK: - Historial de Lavados
+    // MARK: - Wash History
 
     func getWashHistory(userId: String) async throws -> [WashHistory] {
         let response: [WashHistory] = try await client
