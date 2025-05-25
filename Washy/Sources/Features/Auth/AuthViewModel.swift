@@ -12,19 +12,19 @@ class AuthViewModel: ObservableObject {
     @Published var currentSubscription: Subscription?
     @Published var error: String?
     @Published var isLoading = false
-    
+
     private let supabaseService = SupabaseService.shared
-    
+
     init() {
         Task {
             await checkAuthStatus()
         }
     }
-    
+
     func checkAuthStatus() async {
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             if let user = try await supabaseService.getCurrentUser() {
                 currentUser = user
@@ -34,19 +34,19 @@ class AuthViewModel: ObservableObject {
                 isAuthenticated = true
             } else {
                 isAuthenticated = false
-                currentUser = nil
-                userProfile = nil
-                currentSubscription = nil
+                currentUser = Optional<User>.none
+                userProfile = Optional<UserProfile>.none
+                currentSubscription = Optional<Subscription>.none
             }
         } catch {
             self.error = error.localizedDescription
         }
     }
-    
+
     func signIn(email: String, password: String) async {
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             let user = try await supabaseService.signIn(email: email, password: password)
             currentUser = user
@@ -58,15 +58,15 @@ class AuthViewModel: ObservableObject {
             self.error = error.localizedDescription
         }
     }
-    
+
     func signUp(email: String, password: String, fullName: String) async {
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             let user = try await supabaseService.signUp(email: email, password: password)
             currentUser = user
-            
+
             let profile = UserProfile(
                 id: user.id,
                 fullName: fullName,
@@ -76,7 +76,7 @@ class AuthViewModel: ObservableObject {
                 createdAt: Date(),
                 updatedAt: Date()
             )
-            
+
             try await supabaseService.createUserProfile(profile)
             userProfile = profile
             isAuthenticated = true
@@ -85,27 +85,27 @@ class AuthViewModel: ObservableObject {
             self.error = error.localizedDescription
         }
     }
-    
+
     func signOut() async {
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             try await supabaseService.signOut()
             isAuthenticated = false
-            currentUser = nil
-            userProfile = nil
-            currentSubscription = nil
+            currentUser = Optional<User>.none
+            userProfile = Optional<UserProfile>.none
+            currentSubscription = Optional<Subscription>.none
             error = nil
         } catch {
             self.error = error.localizedDescription
         }
     }
-    
+
     func updateUserProfile(_ profile: UserProfile) async {
         isLoading = true
         defer { isLoading = false }
-        
+
         do {
             try await supabaseService.updateUserProfile(profile)
             userProfile = profile
@@ -114,4 +114,4 @@ class AuthViewModel: ObservableObject {
             self.error = error.localizedDescription
         }
     }
-} 
+}
