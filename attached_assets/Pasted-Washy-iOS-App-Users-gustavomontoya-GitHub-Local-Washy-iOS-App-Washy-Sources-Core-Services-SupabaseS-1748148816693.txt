@@ -1,0 +1,57 @@
+Washy-iOS-App
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:6:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:7:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:8:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:9:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:10:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:31:15 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:39:16 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:52:15 Initializer for conditional binding must have Optional type, not 'Session'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:93:20 Extraneous argument label 'path:' in call
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:96:30 Cannot find 'StorageUploadOptions' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:121:99 'CarWash' is ambiguous for type lookup in this context
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:122:24 'CarWash' is ambiguous for type lookup in this context
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:151:19 Extraneous argument label 'column:' in call
+
+Washy
+Command SwiftCompile failed with a nonzero exit code
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:6:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:7:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:8:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:9:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:10:26 Underlying Objective-C module 'Washy' not found
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:31:15 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:39:16 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:52:15 Initializer for conditional binding must have Optional type, not 'Session'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:93:20 Extraneous argument label 'path:' in call
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:96:30 Cannot find 'StorageUploadOptions' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:121:99 'CarWash' is ambiguous for type lookup in this context
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:122:24 'CarWash' is ambiguous for type lookup in this context
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:151:19 Extraneous argument label 'column:' in call
