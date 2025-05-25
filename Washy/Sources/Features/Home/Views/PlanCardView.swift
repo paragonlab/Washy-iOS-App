@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct PlanCardView: View {
@@ -8,10 +7,30 @@ struct PlanCardView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Plan Actual")
                 .font(.headline)
+            
             Text(subscription.status.capitalized)
                 .foregroundColor(.gray)
-            Text("Lavados restantes: \(subscription.washesRemaining)")
-                .foregroundColor(.gray)
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Lavados restantes")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    Text("\(subscription.washesRemaining)")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .trailing) {
+                    Text("Válido hasta")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    Text(subscription.currentPeriodEnd, style: .date)
+                        .font(.subheadline)
+                }
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()

@@ -8,7 +8,12 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     // Plan actual
-                    PlanCardView(subscription: viewModel.currentSubscription)
+                    if let subscription = viewModel.currentSubscription {
+                        PlanCardView(subscription: subscription)
+                    } else {
+                        Text("No tienes un plan activo")
+                            .foregroundColor(.gray)
+                    }
                     
                     // Lavados restantes
                     RemainingWashesView(count: viewModel.remainingWashes)
