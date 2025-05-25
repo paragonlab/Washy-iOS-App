@@ -36,10 +36,10 @@ class MapViewModel: ObservableObject {
     }
 }
 
-struct CarWash: Identifiable {
-    let id: String
-    let name: String
-    let address: String
-    let coordinate: CLLocationCoordinate2D
-    let rating: Double
+// Using CarWash from Models.swift
+extension CarWash {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+}e
 } 

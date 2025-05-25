@@ -4,11 +4,7 @@ import CoreLocation
 import Supabase
 
 // Importar los modelos directamente desde el módulo actual
-import struct Models.User
-import struct Models.UserProfile 
-import struct Models.Subscription
-import struct Models.CarWash
-import struct Models.WashHistory
+// Los modelos están en el mismo módulo, no necesitamos importarlos
 
 class SupabaseService {
     static let shared = SupabaseService()
