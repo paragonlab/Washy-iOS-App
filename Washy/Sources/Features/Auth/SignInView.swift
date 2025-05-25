@@ -1,24 +1,33 @@
 import SwiftUI
 
-struct SignInView: View {
-    @StateObject private var viewModel = AuthViewModel()
+public struct SignInView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var email = ""
     @State private var password = ""
-    @State private var isShowingSignUp = false
+    @State private var showingSignUp = false
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Logo
-                Image(systemName: "car.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.blue)
-                
-                Text("Washy")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                // Logo y título
+                VStack(spacing: 10) {
+                    Image(systemName: "drop.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .foregroundColor(.blue)
+                    
+                    Text("Washy")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
+                    Text("Tu auto siempre limpio")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding(.top, 50)
                 
                 // Campos de entrada
                 VStack(spacing: 15) {
@@ -35,16 +44,17 @@ struct SignInView: View {
                 .padding(.horizontal)
                 
                 // Botón de inicio de sesión
-                Button {
+                Button(action: {
                     Task {
-                        await viewModel.signIn(email: email, password: password)
+                        await authViewModel.signIn(email: email, password: password)
                     }
-                } label: {
-                    if viewModel.isLoading {
+                }) {
+                    if authViewModel.isLoading {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                     } else {
                         Text("Iniciar Sesión")
+                            .fontWeight(.semibold)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -53,28 +63,28 @@ struct SignInView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding(.horizontal)
-                .disabled(viewModel.isLoading)
+                .disabled(authViewModel.isLoading)
                 
                 // Botón de registro
-                Button {
-                    isShowingSignUp = true
-                } label: {
-                    Text("¿No tienes cuenta? Regístrate")
-                        .foregroundColor(.blue)
+                Button("¿No tienes cuenta? Regístrate") {
+                    showingSignUp = true
                 }
+                .foregroundColor(.blue)
                 
-                if let error = viewModel.error {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                }
+                Spacer()
             }
-            .padding()
             .navigationBarHidden(true)
-            .sheet(isPresented: $isShowingSignUp) {
+            .sheet(isPresented: $showingSignUp) {
                 SignUpView()
+            }
+            .alert("Error", isPresented: .constant(authViewModel.error != nil)) {
+                Button("OK") {
+                    authViewModel.error = nil
+                }
+            } message: {
+                if let error = authViewModel.error {
+                    Text(error.localizedDescription)
+                }
             }
         }
     }
@@ -82,4 +92,5 @@ struct SignInView: View {
 
 #Preview {
     SignInView()
+        .environmentObject(AuthViewModel())
 } 

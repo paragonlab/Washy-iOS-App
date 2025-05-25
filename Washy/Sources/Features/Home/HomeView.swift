@@ -1,44 +1,102 @@
 import SwiftUI
 
-struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel()
+public struct HomeView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @State private var showingWashHistory = false
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Plan actual
-                    if let subscription = viewModel.currentSubscription {
-                        PlanCardView(subscription: subscription)
-                    } else {
-                        Text("No tienes un plan activo")
-                            .foregroundColor(.gray)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color(.systemBackground))
-                            .cornerRadius(12)
-                            .shadow(radius: 2)
+                    // Tarjeta de suscripción
+                    SubscriptionCard(
+                        remainingWashes: authViewModel.userProfile?.remainingWashes ?? 0,
+                        subscriptionStatus: authViewModel.userProfile?.subscriptionStatus ?? "No activa"
+                    )
+                    
+                    // Botón de lavado
+                    Button {
+                        // Acción para iniciar un lavado
+                    } label: {
+                        HStack {
+                            Image(systemName: "drop.fill")
+                            Text("Iniciar Lavado")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                     }
+                    .padding(.horizontal)
                     
-                    // Lavados restantes
-                    RemainingWashesView(remainingWashes: viewModel.remainingWashes)
-                    
-                    // Ofertas destacadas
-                    FeaturedOffersView(offers: viewModel.featuredOffers)
-                    
-                    // Tienda
-                    StorePreviewView(products: viewModel.featuredProducts)
+                    // Historial de lavados
+                    Button {
+                        showingWashHistory = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "clock.fill")
+                            Text("Historial de Lavados")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                        }
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                    }
+                    .padding(.horizontal)
                 }
-                .padding()
+                .padding(.vertical)
             }
-            .navigationTitle("Washy")
-            .refreshable {
-                await viewModel.refreshData()
+            .navigationTitle("Inicio")
+            .sheet(isPresented: $showingWashHistory) {
+                WashHistoryView()
             }
         }
     }
 }
 
+struct SubscriptionCard: View {
+    let remainingWashes: Int
+    let subscriptionStatus: String
+    
+    var body: some View {
+        VStack(spacing: 15) {
+            Text("Tu Suscripción")
+                .font(.headline)
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Lavados Restantes")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Text("\(remainingWashes)")
+                        .font(.title)
+                        .bold()
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .trailing) {
+                    Text("Estado")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Text(subscriptionStatus)
+                        .font(.title3)
+                        .bold()
+                }
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(15)
+        .padding(.horizontal)
+    }
+}
+
 #Preview {
     HomeView()
+        .environmentObject(AuthViewModel())
 } 

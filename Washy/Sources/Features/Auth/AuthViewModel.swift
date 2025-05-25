@@ -1,100 +1,94 @@
 import Foundation
 import SwiftUI
 
-@MainActor
-class AuthViewModel: ObservableObject {
-    @Published var isAuthenticated = false
-    @Published var currentUser: User?
-    @Published var userProfile: UserProfile?
-    @Published var currentSubscription: Subscription?
-    @Published var error: String?
-    @Published var isLoading = false
-
-    private let supabaseService = SupabaseService.shared
-
-    init() {
-        Task {
-            await checkAuthStatus()
-        }
-    }
-
-    func checkAuthStatus() async {
+public class AuthViewModel: ObservableObject {
+    @Published public var isAuthenticated = false
+    @Published public var isLoading = false
+    @Published public var error: String?
+    @Published public var userProfile: UserProfile?
+    
+    public init() {}
+    
+    public func signIn(email: String, password: String) async {
         isLoading = true
-        defer { isLoading = false }
-
+        error = nil
+        
         do {
-            if let user = try await supabaseService.getCurrentUser() {
-                currentUser = user
-                userProfile = try await supabaseService.getUserProfile(userId: user.id)
-                currentSubscription = try await supabaseService.getCurrentSubscription(userId: user.id)
-                isAuthenticated = true
-            } else {
-                isAuthenticated = false
-                currentUser = nil
-                userProfile = nil
-                currentSubscription = nil
+            let user = try await SupabaseService.shared.signIn(email: email, password: password)
+            let profile = try await SupabaseService.shared.getUserProfile(userId: user.id)
+            let subscription = try await SupabaseService.shared.getCurrentSubscription(userId: user.id)
+            
+            DispatchQueue.main.async {
+                self.userProfile = profile
+                self.isAuthenticated = true
+                self.isLoading = false
             }
         } catch {
-            self.error = error.localizedDescription
+            DispatchQueue.main.async {
+                self.error = error.localizedDescription
+                self.isLoading = false
+            }
         }
     }
-
-    func signIn(email: String, password: String) async {
+    
+    public func signUp(email: String, password: String, fullName: String) async {
         isLoading = true
-        defer { isLoading = false }
-
+        error = nil
+        
         do {
-            let user = try await supabaseService.signIn(email: email, password: password)
-            currentUser = user
-            userProfile = try await supabaseService.getUserProfile(userId: user.id)
-            currentSubscription = try await supabaseService.getCurrentSubscription(userId: user.id)
-            isAuthenticated = true
-            error = nil
-        } catch {
-            self.error = error.localizedDescription
-        }
-    }
-
-    func signUp(email: String, password: String, fullName: String) async {
-        isLoading = true
-        defer { isLoading = false }
-
-        do {
-            let user = try await supabaseService.signUp(email: email, password: password)
-            currentUser = user
-
+            let user = try await SupabaseService.shared.signUp(email: email, password: password)
             let profile = UserProfile(
                 id: user.id,
                 fullName: fullName,
                 email: email,
-                phone: nil,
+                phone: user.phone,
                 avatarUrl: nil,
-                createdAt: Date(),
-                updatedAt: Date()
+                subscriptionId: nil,
+                subscriptionStatus: nil,
+                subscriptionExpiresAt: nil,
+                remainingWashes: 0
             )
-
-            try await supabaseService.createUserProfile(profile)
-            userProfile = profile
-            isAuthenticated = true
-            error = nil
+            
+            try await SupabaseService.shared.createUserProfile(profile)
+            
+            DispatchQueue.main.async {
+                self.userProfile = profile
+                self.isAuthenticated = true
+                self.isLoading = false
+            }
         } catch {
-            self.error = error.localizedDescription
+            DispatchQueue.main.async {
+                self.error = error.localizedDescription
+                self.isLoading = false
+            }
         }
     }
-
-    func signOut() async {
-        isLoading = true
-        defer { isLoading = false }
-
+    
+    public func signOut() async {
         do {
-            try await supabaseService.signOut()
-            isAuthenticated = false
-            currentUser = nil
-            userProfile = nil
-            currentSubscription = nil
-            error = nil
+            try await SupabaseService.shared.signOut()
+            DispatchQueue.main.async {
+                self.isAuthenticated = false
+                self.userProfile = nil
+            }
         } catch {
-            self.error = error.localizedDescription
+            DispatchQueue.main.async {
+                self.error = error.localizedDescription
+            }
+        }
+    }
+    
+    public func checkAuthStatus() async {
+        do {
+            if let user = try await SupabaseService.shared.getCurrentUser() {
+                let profile = try await SupabaseService.shared.getUserProfile(userId: user.id)
+                DispatchQueue.main.async {
+                    self.userProfile = profile
+                    self.isAuthenticated = true
+                }
+            }
+        } catch {
+            print("Error checking auth status: \(error)")
         }
     }
 }

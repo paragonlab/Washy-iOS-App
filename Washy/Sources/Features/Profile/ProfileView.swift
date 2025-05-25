@@ -1,70 +1,82 @@
 import SwiftUI
+import PhotosUI
 
-struct ProfileView: View {
+public struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var showingEditProfile = false
-    @State private var showingLogoutAlert = false
+    @State private var showingSignOutAlert = false
+    @State private var selectedItem: PhotosPickerItem?
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         NavigationView {
             List {
+                // Sección de perfil
                 Section {
-                    if let profile = authViewModel.userProfile {
-                        HStack {
-                            if let avatarUrl = profile.avatarUrl {
-                                AsyncImage(url: URL(string: avatarUrl)) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFill()
-                                } placeholder: {
-                                    Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                }
-                                .frame(width: 60, height: 60)
-                                .clipShape(Circle())
-                            } else {
-                                Image(systemName: "person.circle.fill")
+                    HStack {
+                        if let avatarUrl = authViewModel.userProfile?.avatarUrl {
+                            AsyncImage(url: URL(string: avatarUrl)) { image in
+                                image
                                     .resizable()
-                                    .frame(width: 60, height: 60)
-                                    .foregroundColor(.gray)
+                                    .scaledToFill()
+                            } placeholder: {
+                                ProgressView()
                             }
-                            
-                            VStack(alignment: .leading) {
-                                Text(profile.fullName)
-                                    .font(.headline)
-                                if let email = profile.email {
-                                    Text(email)
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
-                            }
+                            .frame(width: 80, height: 80)
+                            .clipShape(Circle())
+                        } else {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                                .foregroundColor(.gray)
                         }
-                        .padding(.vertical, 8)
+                        
+                        VStack(alignment: .leading) {
+                            Text(authViewModel.userProfile?.fullName ?? "")
+                                .font(.headline)
+                            Text(authViewModel.userProfile?.email ?? "")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    .padding(.vertical, 8)
                 }
                 
-                Section("Cuenta") {
-                    Button(action: { showingEditProfile = true }) {
-                        Label("Editar Perfil", systemImage: "person.crop.circle")
+                // Sección de suscripción
+                Section("Suscripción") {
+                    HStack {
+                        Text("Estado")
+                        Spacer()
+                        Text(authViewModel.userProfile?.subscriptionStatus ?? "No activa")
+                            .foregroundColor(.secondary)
                     }
                     
-                    Button(action: { showingLogoutAlert = true }) {
-                        Label("Cerrar Sesión", systemImage: "rectangle.portrait.and.arrow.right")
-                            .foregroundColor(.red)
+                    if let expiresAt = authViewModel.userProfile?.subscriptionExpiresAt {
+                        HStack {
+                            Text("Vence")
+                            Spacer()
+                            Text(expiresAt, style: .date)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    
+                    HStack {
+                        Text("Lavados Restantes")
+                        Spacer()
+                        Text("\(authViewModel.userProfile?.remainingWashes ?? 0)")
+                            .foregroundColor(.secondary)
                     }
                 }
                 
-                if let subscription = authViewModel.currentSubscription {
-                    Section("Suscripción") {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Plan Actual")
-                                .font(.headline)
-                            Text(subscription.status.capitalized)
-                                .foregroundColor(.gray)
-                            Text("Lavados restantes: \(subscription.washesRemaining)")
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.vertical, 8)
+                // Sección de acciones
+                Section {
+                    Button("Editar Perfil") {
+                        showingEditProfile = true
+                    }
+                    
+                    Button("Cerrar Sesión", role: .destructive) {
+                        showingSignOutAlert = true
                     }
                 }
             }
@@ -72,7 +84,7 @@ struct ProfileView: View {
             .sheet(isPresented: $showingEditProfile) {
                 EditProfileView()
             }
-            .alert("¿Cerrar sesión?", isPresented: $showingLogoutAlert) {
+            .alert("¿Cerrar sesión?", isPresented: $showingSignOutAlert) {
                 Button("Cancelar", role: .cancel) { }
                 Button("Cerrar Sesión", role: .destructive) {
                     Task {
@@ -80,107 +92,54 @@ struct ProfileView: View {
                     }
                 }
             } message: {
-                Text("¿Estás seguro de que deseas cerrar sesión?")
+                Text("¿Estás seguro de que quieres cerrar sesión?")
             }
         }
     }
 }
 
 struct EditProfileView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authViewModel: AuthViewModel
-    @State private var fullName: String = ""
-    @State private var phone: String = ""
-    @State private var showingImagePicker = false
-    @State private var selectedImage: UIImage?
-    @State private var isUploading = false
-    @State private var error: String?
+    @State private var fullName: String
+    @State private var selectedItem: PhotosPickerItem?
+    
+    init() {
+        _fullName = State(initialValue: authViewModel.userProfile?.fullName ?? "")
+    }
     
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    HStack {
-                        Spacer()
-                        if let image = selectedImage {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100)
-                                .clipShape(Circle())
-                        } else if let profile = authViewModel.userProfile,
-                                  let avatarUrl = profile.avatarUrl {
-                            AsyncImage(url: URL(string: avatarUrl)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            } placeholder: {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                            }
-                            .frame(width: 100, height: 100)
-                            .clipShape(Circle())
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                                .foregroundColor(.gray)
+                    TextField("Nombre completo", text: $fullName)
+                }
+                
+                Section {
+                    PhotosPicker(selection: $selectedItem, matching: .images) {
+                        HStack {
+                            Text("Cambiar Foto de Perfil")
+                            Spacer()
+                            Image(systemName: "photo")
                         }
-                        Spacer()
-                    }
-                    .padding(.vertical)
-                    
-                    Button(action: { showingImagePicker = true }) {
-                        Label("Cambiar Foto", systemImage: "photo")
-                    }
-                }
-                
-                Section("Información Personal") {
-                    TextField("Nombre Completo", text: $fullName)
-                    TextField("Teléfono", text: $phone)
-                        .keyboardType(.phonePad)
-                }
-                
-                if let error = error {
-                    Section {
-                        Text(error)
-                            .foregroundColor(.red)
                     }
                 }
             }
             .navigationTitle("Editar Perfil")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancelar") {
                         dismiss()
                     }
                 }
-                ToolbarItem(placement: .confirmationAction) {
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Guardar") {
                         Task {
                             await saveProfile()
                         }
                     }
-                    .disabled(isUploading)
-                }
-            }
-            .onAppear {
-                if let profile = authViewModel.userProfile {
-                    fullName = profile.fullName
-                    phone = profile.phone ?? ""
-                }
-            }
-            .sheet(isPresented: $showingImagePicker) {
-                ImagePicker(image: $selectedImage)
-            }
-            .overlay {
-                if isUploading {
-                    ProgressView("Subiendo imagen...")
-                        .padding()
-                        .background(Color(.systemBackground))
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
                 }
             }
         }
@@ -188,67 +147,27 @@ struct EditProfileView: View {
     
     private func saveProfile() async {
         guard var profile = authViewModel.userProfile else { return }
-        isUploading = true
-        error = nil
+        profile.fullName = fullName
         
-        do {
-            if let image = selectedImage,
-               let imageData = image.jpegData(compressionQuality: 0.8) {
+        if let selectedItem = selectedItem,
+           let data = try? await selectedItem.loadTransferable(type: Data.self) {
+            do {
                 let avatarUrl = try await SupabaseService.shared.uploadProfileImage(
                     userId: profile.id,
-                    imageData: imageData
+                    imageData: data
                 )
                 profile.avatarUrl = avatarUrl
+            } catch {
+                print("Error uploading image: \(error)")
             }
-            
-            profile.fullName = fullName
-            profile.phone = phone
-            profile.updatedAt = Date()
-            
+        }
+        
+        do {
             try await SupabaseService.shared.updateUserProfile(profile)
             authViewModel.userProfile = profile
             dismiss()
         } catch {
-            self.error = error.localizedDescription
-        }
-        
-        isUploading = false
-    }
-}
-
-struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var image: UIImage?
-    @Environment(\.dismiss) private var dismiss
-    
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.delegate = context.coordinator
-        picker.allowsEditing = true
-        return picker
-    }
-    
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: ImagePicker
-        
-        init(_ parent: ImagePicker) {
-            self.parent = parent
-        }
-        
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[.editedImage] as? UIImage {
-                parent.image = image
-            }
-            parent.dismiss()
-        }
-        
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            parent.dismiss()
+            print("Error updating profile: \(error)")
         }
     }
 }

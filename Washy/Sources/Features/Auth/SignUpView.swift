@@ -39,7 +39,7 @@ struct SignUpView: View {
                     Button {
                         Task {
                             if password == confirmPassword {
-                                await viewModel.signUp(email: email, password: password)
+                                await viewModel.signUp(email: email, password: password, fullName: fullName)
                                 if viewModel.isAuthenticated {
                                     dismiss()
                                 }
