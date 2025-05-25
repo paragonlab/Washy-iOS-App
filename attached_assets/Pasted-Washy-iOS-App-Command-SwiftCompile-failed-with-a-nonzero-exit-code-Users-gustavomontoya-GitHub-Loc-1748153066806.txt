@@ -1,0 +1,30 @@
+Washy-iOS-App
+Command SwiftCompile failed with a nonzero exit code
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:23:15 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:23:15 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:31:15 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:31:15 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:49:81 Cannot convert value of type '(ID) -> some View' to expected argument type 'String'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:49:81 Referencing instance method 'id' on 'Optional' requires that 'User' conform to 'View'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:49:81 Generic parameter 'ID' could not be inferred
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:50:97 Cannot convert value of type '(ID) -> some View' to expected argument type 'String'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:50:97 Referencing instance method 'id' on 'Optional' requires that 'User' conform to 'View'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:50:97 Generic parameter 'ID' could not be inferred
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:67:26 Cannot convert value of type '(ID) -> some View' to expected argument type 'String'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:67:26 Referencing instance method 'id' on 'Optional' requires that 'User' conform to 'View'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Auth/AuthViewModel.swift:67:26 Generic parameter 'ID' could not be inferred
