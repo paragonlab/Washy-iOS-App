@@ -41,5 +41,4 @@ extension CarWash {
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-}e
 } 

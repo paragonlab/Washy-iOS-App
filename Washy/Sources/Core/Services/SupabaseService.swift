@@ -23,17 +23,17 @@ class SupabaseService {
 
     // MARK: - Autenticación
 
-    func signUp(email: String, password: String) async throws -> User {
+    func signUp(email: String, password: String) async throws -> User? {
         let response = try await client.auth.signUp(email: email, password: password)
-        if let session = response.session, let user = session.user {
+        if let user = response.user {
             return User(id: user.id.uuidString, email: user.email, phone: user.phone)
         }
         throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign up"])
     }
 
-    func signIn(email: String, password: String) async throws -> User {
+    func signIn(email: String, password: String) async throws -> User? {
         let response = try await client.auth.signIn(email: email, password: password)
-        if let session = response.session, let user = session.user {
+        if let user = response.user {
             return User(id: user.id.uuidString, email: user.email, phone: user.phone)
         }
         throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign in"])
@@ -94,7 +94,7 @@ class SupabaseService {
         let publicURL = try await client
             .storage
             .from("avatars")
-            .createSignedUrl(fileName, expiresIn: 3600)
+            .createSignedURL(path: fileName, expiresIn: 3600)
 
         return publicURL.absoluteString
     }
@@ -105,7 +105,7 @@ class SupabaseService {
         try await client
             .storage
             .from("avatars")
-            .remove([fileName])
+            .remove(paths: [fileName])
     }
 
     // MARK: - Autolavados
