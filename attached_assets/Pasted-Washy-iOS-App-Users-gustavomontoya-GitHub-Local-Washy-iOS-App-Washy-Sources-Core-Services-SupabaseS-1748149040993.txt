@@ -1,0 +1,40 @@
+Washy-iOS-App
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:28:44 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:36:35 Value of type 'Session' has no member 'session'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:97:14 Value of type 'StorageFileApi' has no member 'createSignedUrl'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:108:21 Missing argument label 'paths:' in call
+
+Washy
+Command SwiftCompile failed with a nonzero exit code
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Models/Models.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Models/Models.swift:72:8 Invalid redeclaration of 'CarWash'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:28:44 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:36:35 Value of type 'Session' has no member 'session'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:97:14 Value of type 'StorageFileApi' has no member 'createSignedUrl'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:108:21 Missing argument label 'paths:' in call
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:11:21 Cannot find 'PlanCardView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:14:21 Cannot find 'RemainingWashesView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:17:21 Cannot find 'FeaturedOffersView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:20:21 Cannot find 'StorePreviewView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:44:2 Consecutive statements on a line must be separated by ';'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:44:2 Expressions are not allowed at the top level
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapViewModel.swift:45:1 Extraneous '}' at top level
