@@ -1,0 +1,33 @@
+Washy-iOS-App
+Command SwiftCompile failed with a nonzero exit code
+
+Washy
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:27:12 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:30:25 Cannot find 'user' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:30:52 Cannot find 'user' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:30:71 Cannot find 'user' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:35:12 Initializer for conditional binding must have Optional type, not 'User'
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:38:25 Cannot find 'user' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:38:52 Cannot find 'user' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Core/Services/SupabaseService.swift:38:71 Cannot find 'user' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:4:15 Cannot find type 'Plan' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:59:21 Cannot find 'FeaturedOffersView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Home/HomeView.swift:62:21 Cannot find 'StorePreviewView' in scope
+
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapView.swift
+/Users/gustavomontoya/GitHub_Local/Washy-iOS-App/Washy/Sources/Features/Map/MapView.swift:91:53 Value of type 'CarWash' has no member 'rating'
+
+/Users/gustavomontoya/Library/Developer/Xcode/DerivedData/Washy-iOS-App-ebxtleftnqsknpfdcuknjuepzwcy/Build/Intermediates.noindex/Washy.build/Debug-iphonesimulator/Washy.build/Objects-normal/arm64/Washy.swiftmodule
+/Users/gustavomontoya/Library/Developer/Xcode/DerivedData/Washy-iOS-App-ebxtleftnqsknpfdcuknjuepzwcy/Build/Intermediates.noindex/Washy.build/Debug-iphonesimulator/Washy.build/Objects-normal/arm64/Washy.swiftmodule /Users/gustavomontoya/Library/Developer/Xcode/DerivedData/Washy-iOS-App-ebxtleftnqsknpfdcuknjuepzwcy/Build/Intermediates.noindex/Washy.build/Debug-iphonesimulator/Washy.build/Objects-normal/arm64/Washy.swiftmodule: No such file or directory
