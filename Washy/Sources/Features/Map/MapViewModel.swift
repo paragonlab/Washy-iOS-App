@@ -22,15 +22,15 @@ class MapViewModel: ObservableObject {
                 id: "1",
                 name: "AutoLavado Express",
                 address: "Av. Reforma 123",
-                coordinate: CLLocationCoordinate2D(latitude: 19.4326, longitude: -99.1332),
-                rating: 4.5
+                latitude: 19.4326,
+                longitude: -99.1332
             ),
             CarWash(
                 id: "2",
                 name: "Lavado Premium",
                 address: "Av. Insurgentes 456",
-                coordinate: CLLocationCoordinate2D(latitude: 19.4226, longitude: -99.1432),
-                rating: 4.8
+                latitude: 19.4226,
+                longitude: -99.1432
             )
         ]
     }
