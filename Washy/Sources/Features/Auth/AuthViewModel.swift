@@ -46,8 +46,8 @@ class AuthViewModel: ObservableObject {
         do {
             let user = try await supabaseService.signIn(email: email, password: password)
             currentUser = user
-            userProfile = try await supabaseService.getUserProfile(userId: user.id)
-            currentSubscription = try await supabaseService.getCurrentSubscription(userId: user.id)
+            userProfile = try await supabaseService.getUserProfile(userId: String(user.id))
+            currentSubscription = try await supabaseService.getCurrentSubscription(userId: String(user.id))
             isAuthenticated = true
             error = nil
         } catch {
@@ -64,7 +64,7 @@ class AuthViewModel: ObservableObject {
             currentUser = user
 
             let profile = UserProfile(
-                id: user.id,
+                id: String(user.id),
                 fullName: fullName,
                 email: email,
                 phone: nil,
