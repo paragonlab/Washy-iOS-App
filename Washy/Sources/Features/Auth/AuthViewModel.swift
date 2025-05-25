@@ -1,4 +1,8 @@
 import Foundation
+// Las definiciones de modelos ahora están en Models.swift
+// struct User: Codable { ... }
+// struct UserProfile: Codable { ... }
+// struct Subscription: Codable { ... }
 
 @MainActor
 class AuthViewModel: ObservableObject {
@@ -24,6 +28,7 @@ class AuthViewModel: ObservableObject {
         do {
             if let user = try await supabaseService.getCurrentUser() {
                 currentUser = user
+                // Asegurarse de que getUserProfile y getCurrentSubscription devuelvan los modelos correctos
                 userProfile = try await supabaseService.getUserProfile(userId: user.id)
                 currentSubscription = try await supabaseService.getCurrentSubscription(userId: user.id)
                 isAuthenticated = true

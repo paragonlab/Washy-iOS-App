@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         // Supabase
-        .package(url: "https://github.com/supabase-community/supabase-swift.git", from: "0.3.0"),
+        .package(url: "https://github.com/supabase/supabase-swift.git", from: "2.5.1"),
         
         // MapKit
         .package(url: "https://github.com/mapbox/mapbox-maps-ios.git", from: "10.0.0"),
