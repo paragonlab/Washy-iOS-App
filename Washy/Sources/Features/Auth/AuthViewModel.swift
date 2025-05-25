@@ -1,8 +1,5 @@
 import Foundation
-// Las definiciones de modelos ahora están en Models.swift
-// struct User: Codable { ... }
-// struct UserProfile: Codable { ... }
-// struct Subscription: Codable { ... }
+import SwiftUI
 
 @MainActor
 class AuthViewModel: ObservableObject {
@@ -28,15 +25,14 @@ class AuthViewModel: ObservableObject {
         do {
             if let user = try await supabaseService.getCurrentUser() {
                 currentUser = user
-                // Asegurarse de que getUserProfile y getCurrentSubscription devuelvan los modelos correctos
                 userProfile = try await supabaseService.getUserProfile(userId: user.id)
                 currentSubscription = try await supabaseService.getCurrentSubscription(userId: user.id)
                 isAuthenticated = true
             } else {
                 isAuthenticated = false
-                currentUser = Optional<User>.none
-                userProfile = Optional<UserProfile>.none
-                currentSubscription = Optional<Subscription>.none
+                currentUser = nil
+                userProfile = nil
+                currentSubscription = nil
             }
         } catch {
             self.error = error.localizedDescription
@@ -93,22 +89,9 @@ class AuthViewModel: ObservableObject {
         do {
             try await supabaseService.signOut()
             isAuthenticated = false
-            currentUser = Optional<User>.none
-            userProfile = Optional<UserProfile>.none
-            currentSubscription = Optional<Subscription>.none
-            error = nil
-        } catch {
-            self.error = error.localizedDescription
-        }
-    }
-
-    func updateUserProfile(_ profile: UserProfile) async {
-        isLoading = true
-        defer { isLoading = false }
-
-        do {
-            try await supabaseService.updateUserProfile(profile)
-            userProfile = profile
+            currentUser = nil
+            userProfile = nil
+            currentSubscription = nil
             error = nil
         } catch {
             self.error = error.localizedDescription
