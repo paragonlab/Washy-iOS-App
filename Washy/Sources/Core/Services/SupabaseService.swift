@@ -1,13 +1,14 @@
+
 import Foundation
 import CoreLocation
 import Supabase
 
-// Importar los modelos definidos en Models.swift
-@_exported import struct Washy.User
-@_exported import struct Washy.UserProfile
-@_exported import struct Washy.Subscription
-@_exported import struct Washy.CarWash
-@_exported import struct Washy.WashHistory
+// Importar los modelos directamente
+import struct Washy.User
+import struct Washy.UserProfile
+import struct Washy.Subscription
+import struct Washy.CarWash
+import struct Washy.WashHistory
 
 class SupabaseService {
     static let shared = SupabaseService()
@@ -28,18 +29,18 @@ class SupabaseService {
 
     func signUp(email: String, password: String) async throws -> User {
         let response = try await client.auth.signUp(email: email, password: password)
-        guard let user = response.user else {
-            throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign up"])
+        if let user = response.user {
+            return User(id: user.id.uuidString, email: user.email, phone: user.phone)
         }
-        return User(id: user.id.uuidString, email: user.email, phone: user.phone)
+        throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign up"])
     }
 
     func signIn(email: String, password: String) async throws -> User {
         let response = try await client.auth.signIn(email: email, password: password)
-         guard let user = response.user else {
-             throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign in"])
+        if let user = response.user {
+            return User(id: user.id.uuidString, email: user.email, phone: user.phone)
         }
-        return User(id: user.id.uuidString, email: user.email, phone: user.phone)
+        throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign in"])
     }
 
     func signOut() async throws {
@@ -49,8 +50,10 @@ class SupabaseService {
     // MARK: - Usuarios
 
     func getCurrentUser() async throws -> User? {
-        guard let session = try await client.auth.session else { return nil }
-        return User(id: session.user.id.uuidString, email: session.user.email, phone: session.user.phone)
+        if let session = try? await client.auth.session {
+            return User(id: session.user.id.uuidString, email: session.user.email, phone: session.user.phone)
+        }
+        return nil
     }
 
     func getUserProfile(userId: String) async throws -> UserProfile {
@@ -87,22 +90,19 @@ class SupabaseService {
     func uploadProfileImage(userId: String, imageData: Data) async throws -> String {
         let fileName = "\(userId)/profile.jpg"
 
-        let response = try await client
+        try await client
             .storage
             .from("avatars")
             .upload(
-                    path: fileName,
-                    data: imageData,
-                    options: StorageUploadOptions(
-                        contentType: "image/jpeg",
-                        cacheControl: "3600"
-                    )
-                )
+                fileName,
+                data: imageData,
+                options: .init(contentType: "image/jpeg", cacheControl: "3600")
+            )
 
         let publicURL = try await client
-                .storage
-                .from("avatars")
-                .createSignedURL(path: fileName, expiresIn: 3600)
+            .storage
+            .from("avatars")
+            .createSignedUrl(path: fileName, expiresIn: 3600)
 
         return publicURL.absoluteString
     }
@@ -113,7 +113,7 @@ class SupabaseService {
         try await client
             .storage
             .from("avatars")
-            .remove(paths: [fileName])
+            .remove([fileName])
     }
 
     // MARK: - Autolavados
@@ -148,7 +148,7 @@ class SupabaseService {
             .from("wash_history")
             .select()
             .eq("user_id", value: userId)
-            .order(column: "created_at", ascending: false)
+            .order("created_at", ascending: false)
             .execute()
             .value
 
