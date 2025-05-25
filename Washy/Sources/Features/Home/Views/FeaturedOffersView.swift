@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FeaturedOffersView: View {
-    let offers: [String] // Placeholder, replace with proper Offer model
+    let offers: [Offer]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -10,11 +10,20 @@ struct FeaturedOffersView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(offers, id: \.self) { offer in
-                        Text(offer)
-                            .padding()
-                            .background(Color.blue.opacity(0.1))
-                            .cornerRadius(8)
+                    ForEach(offers) { offer in
+                        VStack(alignment: .leading) {
+                            Text(offer.title)
+                                .font(.headline)
+                            Text(offer.description)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            Text("$\(String(format: "%.2f", offer.price))")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                        }
+                        .padding()
+                        .background(Color.blue.opacity(0.1))
+                        .cornerRadius(8)
                     }
                 }
             }

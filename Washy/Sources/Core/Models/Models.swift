@@ -1,10 +1,3 @@
-//
-//  Models.swift
-//  Washy
-//
-//  Created by Generative AI on ....
-//
-
 import Foundation
 import Supabase
 
@@ -14,18 +7,11 @@ struct User: Codable {
     let id: String
     let email: String?
     let phone: String?
-    // La estructura User de GoTrue (Supabase 2.x.x) puede tener diferentes campos.
-    // Ajustaremos esto según sea necesario al integrar con AuthViewModel.
-
-    // La propiedad 'createdAt' puede no estar directamente en GoTrue.User, 
-    // a menudo se maneja en el perfil del usuario.
-    // let createdAt: Date 
 
     enum CodingKeys: String, CodingKey {
         case id
         case email
         case phone
-        // case createdAt = "created_at"
     }
 }
 
@@ -35,7 +21,7 @@ struct UserProfile: Codable {
     let email: String?
     var phone: String?
     var avatarUrl: String?
-    let createdAt: Date // Asumiendo que el perfil sí tiene createdAt
+    let createdAt: Date
     var updatedAt: Date
 
     enum CodingKeys: String, CodingKey {
@@ -76,6 +62,15 @@ struct CarWash: Codable, Identifiable {
     let latitude: Double
     let longitude: Double
     let rating: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case address
+        case latitude
+        case longitude
+        case rating
+    }
 }
 
 struct WashHistory: Codable, Identifiable {

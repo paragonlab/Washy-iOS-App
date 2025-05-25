@@ -2,9 +2,6 @@ import Foundation
 import CoreLocation
 import Supabase
 
-// Importar los modelos directamente desde el módulo actual
-// Los modelos están en el mismo módulo, no necesitamos importarlos
-
 class SupabaseService {
     static let shared = SupabaseService()
 
@@ -27,7 +24,7 @@ class SupabaseService {
         if let supabaseUser = response.user {
             return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
         }
-        throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign up"])
+        return nil
     }
 
     func signIn(email: String, password: String) async throws -> User? {
@@ -35,7 +32,7 @@ class SupabaseService {
         if let supabaseUser = response.user {
             return User(id: supabaseUser.id.uuidString, email: supabaseUser.email, phone: supabaseUser.phone)
         }
-        throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign in"])
+        return nil
     }
 
     func signOut() async throws {
@@ -88,12 +85,12 @@ class SupabaseService {
         try await client
             .storage
             .from("avatars")
-            .upload(fileName, data: imageData)
+            .upload(path: fileName, file: imageData, options: nil)
 
         let publicURL = try await client
             .storage
             .from("avatars")
-            .createSignedURL(path: fileName, expiresIn: 3600)
+            .createSignedUrl(path: fileName, expiresIn: 3600)
 
         return publicURL.absoluteString
     }
@@ -104,7 +101,7 @@ class SupabaseService {
         try await client
             .storage
             .from("avatars")
-            .remove(paths: [fileName])
+            .remove([fileName])
     }
 
     // MARK: - Autolavados
