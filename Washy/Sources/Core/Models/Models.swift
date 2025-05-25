@@ -16,11 +16,11 @@ struct User: Codable {
     let phone: String?
     // La estructura User de GoTrue (Supabase 2.x.x) puede tener diferentes campos.
     // Ajustaremos esto según sea necesario al integrar con AuthViewModel.
-    
+
     // La propiedad 'createdAt' puede no estar directamente en GoTrue.User, 
     // a menudo se maneja en el perfil del usuario.
     // let createdAt: Date 
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case email
@@ -37,7 +37,7 @@ struct UserProfile: Codable {
     var avatarUrl: String?
     let createdAt: Date // Asumiendo que el perfil sí tiene createdAt
     var updatedAt: Date
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case fullName = "full_name"
@@ -57,7 +57,7 @@ struct Subscription: Codable {
     let currentPeriodStart: Date
     let currentPeriodEnd: Date
     let washesRemaining: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
@@ -86,11 +86,11 @@ struct WashHistory: Codable, Identifiable {
     let carWashId: String
     let createdAt: Date // Asumiendo que el historial tiene createdAt
     // ... otras propiedades relevantes del historial de lavado
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
         case carWashId = "car_wash_id"
         case createdAt = "created_at"
     }
-} 
+}

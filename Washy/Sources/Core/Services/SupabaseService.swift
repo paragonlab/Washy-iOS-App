@@ -24,7 +24,7 @@ class SupabaseService {
 
     func signUp(email: String, password: String) async throws -> User {
         let response = try await client.auth.signUp(email: email, password: password)
-        guard let user = response.user else {
+        if let user = response.user {
             throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign up"])
         }
         return User(id: user.id.uuidString, email: user.email, phone: user.phone)
@@ -32,7 +32,7 @@ class SupabaseService {
 
     func signIn(email: String, password: String) async throws -> User {
         let response = try await client.auth.signIn(email: email, password: password)
-        guard let user = response.user else {
+        if let user = response.user {
             throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign in"])
         }
         return User(id: user.id.uuidString, email: user.email, phone: user.phone)

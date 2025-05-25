@@ -10,7 +10,7 @@ struct ContentView: View {
                     Label("Mapa", systemImage: "map")
                 }
             
-            QRCodeView()
+            QRView()
                 .tabItem {
                     Label("QR", systemImage: "qrcode")
                 }
