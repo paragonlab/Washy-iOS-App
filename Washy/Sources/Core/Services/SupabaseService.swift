@@ -3,12 +3,12 @@ import Foundation
 import CoreLocation
 import Supabase
 
-// Importar los modelos directamente
-import struct Washy.User
-import struct Washy.UserProfile
-import struct Washy.Subscription
-import struct Washy.CarWash
-import struct Washy.WashHistory
+// Importar los modelos directamente desde el módulo actual
+import struct Models.User
+import struct Models.UserProfile 
+import struct Models.Subscription
+import struct Models.CarWash
+import struct Models.WashHistory
 
 class SupabaseService {
     static let shared = SupabaseService()
@@ -29,7 +29,7 @@ class SupabaseService {
 
     func signUp(email: String, password: String) async throws -> User {
         let response = try await client.auth.signUp(email: email, password: password)
-        if let user = response.user {
+        if let session = response.session, let user = session.user {
             return User(id: user.id.uuidString, email: user.email, phone: user.phone)
         }
         throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign up"])
@@ -37,7 +37,7 @@ class SupabaseService {
 
     func signIn(email: String, password: String) async throws -> User {
         let response = try await client.auth.signIn(email: email, password: password)
-        if let user = response.user {
+        if let session = response.session, let user = session.user {
             return User(id: user.id.uuidString, email: user.email, phone: user.phone)
         }
         throw NSError(domain: "AuthError", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not found after sign in"])
@@ -93,16 +93,12 @@ class SupabaseService {
         try await client
             .storage
             .from("avatars")
-            .upload(
-                fileName,
-                data: imageData,
-                options: .init(contentType: "image/jpeg", cacheControl: "3600")
-            )
+            .upload(fileName, data: imageData)
 
         let publicURL = try await client
             .storage
             .from("avatars")
-            .createSignedUrl(path: fileName, expiresIn: 3600)
+            .createSignedUrl(fileName, expiresIn: 3600)
 
         return publicURL.absoluteString
     }
@@ -148,7 +144,7 @@ class SupabaseService {
             .from("wash_history")
             .select()
             .eq("user_id", value: userId)
-            .order("created_at", ascending: false)
+            .order("created_at")
             .execute()
             .value
 
