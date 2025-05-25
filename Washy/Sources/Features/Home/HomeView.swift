@@ -8,7 +8,7 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     // Plan actual
-                    PlanCardView(plan: viewModel.currentPlan)
+                    PlanCardView(subscription: viewModel.currentSubscription)
                     
                     // Lavados restantes
                     RemainingWashesView(count: viewModel.remainingWashes)
